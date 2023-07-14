@@ -1,6 +1,6 @@
 #include <stdio.h>
 /**
- * main - A program that runs various types of sizes on the computer
+ * Main - A program that runs various types of sizes on the computer
  * Return: 0 (success)
  */
 int main(void)
