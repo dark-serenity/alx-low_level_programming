@@ -1,2 +1,4 @@
 #!/bin/bash
+
 c_file="$CFILE"; gcc -S -masm=intel "$c_file" -o "${c_file%.c}.s"
+
