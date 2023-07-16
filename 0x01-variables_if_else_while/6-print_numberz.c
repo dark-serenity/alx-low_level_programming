@@ -4,22 +4,17 @@
  * main - Entry point
  *
  * Description: Prints all single-digit numbers of base 10 starting from 0,
- *              followed by a new line.
+ *              followed by a new line using putchar function.
  *
  * Return: Always 0 (Success)
  */
 int main(void)
 {
-	putchar('0' + 0);
-	putchar('0' + 1);
-	putchar('0' + 2);
-	putchar('0' + 3);
-	putchar('0' + 4);
-	putchar('0' + 5);
-	putchar('0' + 6);
-	putchar('0' + 7);
-	putchar('0' + 8);
-	putchar('0' + 9);
+	int number;
+
+	for (number = 0; number < 10; number++)
+		putchar(number + '0');
+
 	putchar('\n');
 
 	return (0);
