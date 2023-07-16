@@ -5,30 +5,29 @@
 /**
  * main - Entry point
  *
- * Description: Prints the last digit of a random number
+ * Description: Prints information about the last digit of a random number
  *
  * Return: Always 0 (Success)
  */
 int main(void)
 {
-    int n;
+	int n;
 
-    /* Seed the random number generator */
-    srand(time(0));
+	/* Seed the random number generator */
+	srand(time(0));
 
-    /* Generate a random number */
-    n = rand();
+	/* Generate a random number */
+	n = rand();
 
-    printf("Last digit of %d is %d", n, abs(n % 10));
+	printf("Last digit of %d is %d and is", n, n % 10);
 
-    if (abs(n % 10) > 5)
-        printf(" and is greater than 5\n");
-    else if (abs(n % 10) == 0)
-        printf(" and is 0\n");
-    else
-        printf(" and is less than 6 and not 0\n");
+	if (n % 10 > 5)
+		printf(" greater than 5\n");
+	else if (n % 10 < 6 && n % 10 != 0)
+		printf(" less than 6 and not 0\n");
+	else
+		printf(" 0\n");
 
-    return 0;
+	return (0);
 }
-
 
