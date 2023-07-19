@@ -17,13 +17,18 @@ void print_alphabet(void)
 }
 
 /**
- * main - Entry point of the program
+ * my_main - Entry point of the program
  *
  * Return: Always 0 (Success)
  */
-int main(void)
+int my_main(void)
 {
         print_alphabet();
         return 0;
+}
+
+int main(void)
+{
+        return my_main();
 }
 
