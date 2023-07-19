@@ -4,8 +4,8 @@
  * _putchar - writes the character c to stdout
  * @c: the character to print
  *
- * Return: on success 1
- * On error, -1 is returned, and errno is set appropriatly
+ * Return: On success 1
+ * On error, -1 is returned and errno is set appropriatly
  */
 int _putchar(char c)
 {
