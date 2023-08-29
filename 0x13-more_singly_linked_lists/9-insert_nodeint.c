@@ -1,41 +1,22 @@
+#include <stdlib.h>
 #include "lists.h"
 
 /**
- * insert_nodeint_at_index - Inserts a new node at a given position.
- * @head: Pointer to the pointer to the head of the list.
- * @idx: Index at which the new node should be inserted.
- * @n: Value to be stored in the new node.
- * Return: Pointer to the new node, or NULL if it failed.
+ * get_nodeint_at_index - Returns the nth node of a listint_t linked list.
+ * @head: Pointer to the head of the list.
+ * @index: Index of the node to retrieve.
+ * Return: Address of the node at the specified index, or NULL if not found.
  */
-listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
+listint_t *get_nodeint_at_index(listint_t *head, unsigned int index)
 {
-	listint_t *new_node, *temp = *head;
-	unsigned int i;
+unsigned int count = 0;
 
-	if (head == NULL)
-		return (NULL);
+while (head != NULL)
+{
+if (count == index)
+return (head);
 
-	if (idx == 0)
-		return (add_nodeint(head, n));
-
-	for (i = 0; i < idx - 1; i++)
-	{
-		if (temp == NULL)
-			return (NULL);
-		temp = temp->next;
-	}
-
-	if (temp == NULL)
-		return (NULL);
-
-	new_node = malloc(sizeof(listint_t));
-	if (new_node == NULL)
-		return (NULL);
-
-	new_node->n = n;
-	new_node->next = temp->next;
-	temp->next = new_node;
-
-	return (new_node);
+count++;
+head = head->next;
+return (NULL);
 }
-
