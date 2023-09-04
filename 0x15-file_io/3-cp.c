@@ -1,45 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
 #include <unistd.h>
-#include "main.h"
+#include <fcntl.h>
 
-void error_message(const char *msg, int code)
+/**
+ * error_exit - Print an error message and exit with a specific code.
+ * @code: The exit code.
+ * @message: The error message to print.
+ */
+void error_exit(int code, const char *message)
 {
-    dprintf(STDERR_FILENO, "%s\n", msg);
-    exit(code);
+	dprintf(STDERR_FILENO, "%s\n", message);
+	exit(code);
 }
 
-int main(int ac, char **av)
+/**
+ * main - Entry point. Copies the content of one file to another.
+ * @argc: The number of command-line arguments.
+ * @argv: An array of command-line argument strings.
+ *
+ * Return: 0 on success, or an exit code on failure.
+ */
+int main(int argc, char *argv[])
 {
-    int fd_from, fd_to;
-    ssize_t bytes_read, bytes_written;
-    char buffer[1024];
+	if (argc != 3)
+	{
+		error_exit(97, "Usage: cp file_from file_to");
+	}
 
-    if (ac != 3)
-        error_message("Usage: cp file_from file_to", 97);
+	char *file_from = argv[1];
+	char *file_to = argv[2];
 
-    fd_from = open(av[1], O_RDONLY);
-    if (fd_from == -1)
-        error_message("Error: Can't read from file", 98);
+	int fd_from, fd_to;
+	ssize_t bytes_read, bytes_written;
+	char buffer[1024];
 
-    fd_to = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-    if (fd_to == -1)
-        error_message("Error: Can't write to file", 99);
+	fd_from = open(file_from, O_RDONLY);
+	if (fd_from == -1)
+	{
+		error_exit(98, "Error: Can't read from file");
+	}
 
-    while ((bytes_read = read(fd_from, buffer, 1024)) > 0)
-    {
-        bytes_written = write(fd_to, buffer, bytes_read);
-        if (bytes_written == -1 || bytes_written != bytes_read)
-            error_message("Error: Can't write to file", 99);
-    }
+	fd_to = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (fd_to == -1)
+	{
+		error_exit(99, "Error: Can't write to file");
+	}
 
-    if (bytes_read == -1)
-        error_message("Error: Can't read from file", 98);
+	while ((bytes_read = read(fd_from, buffer, sizeof(buffer))) > 0)
+	{
+		bytes_written = write(fd_to, buffer, bytes_read);
+		if (bytes_written == -1 || bytes_written != bytes_read)
+		{
+			error_exit(99, "Error: Can't write to file");
+		}
+	}
 
-    if (close(fd_from) == -1 || close(fd_to) == -1)
-        error_message("Error: Can't close fd", 100);
+	if (bytes_read == -1)
+	{
+		error_exit(98, "Error: Can't read from file");
+	}
 
-    return (0);
+	if (close(fd_from) == -1 || close(fd_to) == -1)
+	{
+		error_exit(100, "Error: Can't close fd");
+	}
+
+	return (0);
 }
 
